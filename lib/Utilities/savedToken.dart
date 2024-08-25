@@ -1,0 +1,5 @@
+import 'package:flutter/material.dart';
+
+class SavedToken{
+  static const String token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhbWdvbTI5OEBnbWFpbC5jb20iLCJwaG9uZSI6IisyMDEwMzMzMDQ1MDQiLCJpZCI6IjY2YmY1NmI3ZDc0M2Q3ZWRjNWY0NThlNSIsImlhdCI6MTcyMzgxNjE4NCwiZXhwIjoxNzM0MTg0MTg0fQ.93uLhrIBdmb0tqLEcCLze4mq1IzS27FvL2flY7BnhTY';
+}
