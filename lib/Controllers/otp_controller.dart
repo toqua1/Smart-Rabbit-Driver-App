@@ -21,11 +21,11 @@ class OtpController extends GetxController {
   }) async {
     isLoading.value = true;
     try {
-      print('Validating OTP: $otp');
+       
       int.parse(otp);
       final otpToken = storage.read('otpToken') ?? ''; // Fetch the resetToken from Get Storage
 
-      print('Using resetToken: $otpToken');
+       
 
       final response = await Dio().post(
         '${ApiEndpoints.baseUrl}${ApiEndpoints.validateOtpEndpoint}',
@@ -41,7 +41,7 @@ class OtpController extends GetxController {
       );
 
       if (response.data != null && response.data is Map<String, dynamic>) {
-        print('OTP validation response: ${response.data}');
+         
         ResetOtpResponse resetOtpResponse = ResetOtpResponse.fromJson(response.data);
         storage.write('resetToken', resetOtpResponse.resetToken); // Save resetToken in Get Storage
         return resetOtpResponse;
@@ -49,7 +49,7 @@ class OtpController extends GetxController {
         throw Exception("Invalid response format");
       }
     } catch (e) {
-      debugPrint('OTP validation failed: $e');
+      // debug
       rethrow;
     } finally {
       isLoading.value = false; // Set loading state to false

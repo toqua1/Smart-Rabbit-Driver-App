@@ -42,23 +42,24 @@ class ChangePasswordController extends GetxController {
         '${ApiEndpoints.baseUrl}${ApiEndpoints.updatePasswordEndpoint}',
         data: {
           'password': password,
-          'confirmPassword': confirmPassword,
+          'passwordConfirm': confirmPassword,
         },
         options: Options(
           headers: {
             'Content-Type': 'application/json',
-            'otp': 'Bearer $resetToken' // Use the resetToken here
+            'resetpassword': 'Bearer $resetToken' // Use the resetToken here
           },
         ),
       );
 
       if (response.data != null && response.data is Map<String, dynamic>) {
+        storage.write('token', resetToken);
         return ChangePasswordResponse.fromJson(response.data);
       } else {
         throw Exception("Invalid response format");
       }
     } catch (e) {
-      debugPrint('Password update failed: $e');
+      // debug
       rethrow;
     } finally {
       isLoading.value = false; // Set loading state to false

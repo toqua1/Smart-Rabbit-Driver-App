@@ -1,57 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:smart_rabbit_second_app/View/Create_account_pages/store_information.dart';
+import 'package:smart_rabbit_second_app/View/Widgets/custom_button_edit.dart';
 import '../../Controllers/create_password_controller.dart';
-import '../../Utilities/registration_abstraction.dart'; // Adjust the import path as necessary
-import '../Widgets/custom_textfiled.dart'; // Assuming you have this custom widget
+import '../../Utilities/app_styles.dart';
+import '../Widgets/custom_textfiled.dart';
 
-class CreatePasswordPage extends GetView<CreatePasswordController> implements StepPage {
-
+class CreatePasswordPage extends StatelessWidget {
   CreatePasswordPage({super.key});
+  final CreatePasswordController controller=Get.put(CreatePasswordController());
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Create Password".tr,
-              style: const TextStyle(fontSize: 23),
-            ),
-            Text(
-              "Set a secure password for your account".tr,
-              style: TextStyle(
-                  fontSize: 14.5, color: Colors.black.withOpacity(0.5)),
-            ),
-            SizedBox(height: screenHeight * 0.045),
-            CustomTextField(
-              labelText: 'Password'.tr,
-              hintText: 'Enter your password'.tr,
-              controller: controller.passwordController,
-              icon: Iconsax.lock,
-              obscureText: true,
-            ),
-            SizedBox(height: screenHeight * 0.03),
-            CustomTextField(
-              labelText: 'Confirm Password'.tr,
-              hintText: 'Confirm your password'.tr,
-              controller: controller.confirmPasswordController,
-              icon: Iconsax.lock,
-              obscureText: true,
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign Up'.tr),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: screenHeight * 0.045),
+              Text(
+                "   Create \n Password".tr,
+                style: const TextStyle(fontSize: 23),
+              ),
+              SizedBox(height: screenHeight * 0.045),
+              CustomTextField(
+                labelText: 'Password'.tr,
+                hintText: 'Enter your password'.tr,
+                controller: controller.passwordController,
+                icon: Iconsax.lock,
+                obscureText: true,
+              ),
+              SizedBox(height: screenHeight * 0.1),
+              customButton(
+                title: 'Continue'.tr,
+                style: Styles.style14,
+                action: onTapNext,
+                smallSize: true,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  @override
-  bool areFieldsFilled() {
-    return controller.isButtonEnabled.value;
+  void onTapNext(){
+    if(controller.passwordController.text.isNotEmpty){
+      Get.to(StoreInformationPage());
+    }else{
+      Get.snackbar('Error'.tr, 'Please fill empty field'.tr,snackPosition:
+      SnackPosition.BOTTOM);
+    }
   }
 }

@@ -65,7 +65,7 @@ class OtpScreen extends GetView<OtpController> {
                     showFieldAsBox: true,
                     onSubmit: (String verificationCode) async {
                       try {
-                        print(verificationCode);
+                         
                         await controller.validateOtp(otp: verificationCode);
                         QuickAlert.show(
                           context: context,

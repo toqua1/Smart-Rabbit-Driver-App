@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:smart_rabbit_second_app/View/Home/order_list_screen.dart';
 import '../../Controllers/change_password_controller.dart';
 import '../../Utilities/constants.dart';
-import '../Home/home_page.dart';
 import '../Widgets/custom_button.dart';
 import '../Widgets/custom_textfiled.dart';
 import '../Widgets/inter_text_style.dart';
@@ -102,7 +102,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                               showConfirmBtn: false,
                             );
                             Future.delayed(const Duration(seconds: 2), () {
-                              Get.offAll(() => HomePage());
+                              Get.offAll(() => OrderListScreen());
                             });
                           } catch (e) {
                             QuickAlert.show(
@@ -117,7 +117,6 @@ class ChangePasswordScreen extends GetView<ChangePasswordController> {
                         }
                             : null,
                         text: 'Change password'.tr, // Translation added
-                        isButtonEnabled: controller.isButtonEnabled.value,
                       );
                     }
                   }),
