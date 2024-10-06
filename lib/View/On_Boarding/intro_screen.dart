@@ -6,14 +6,14 @@ import '../Login_SignUp/landing _login.dart';
 import '../Login_SignUp/login_screen.dart';
 
 class IntroductionScreenExample extends StatefulWidget {
-  const IntroductionScreenExample({Key? key}) : super(key: key);
+  const IntroductionScreenExample({super.key});
 
   @override
-  _IntroductionScreenExampleState createState() =>
-      _IntroductionScreenExampleState();
+  IntroductionScreenExampleState createState() =>
+      IntroductionScreenExampleState();
 }
 
-class _IntroductionScreenExampleState extends State<IntroductionScreenExample> {
+class IntroductionScreenExampleState extends State<IntroductionScreenExample> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 

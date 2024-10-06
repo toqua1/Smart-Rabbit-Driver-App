@@ -44,16 +44,14 @@ class WalletHistoryController extends GetxController {
       orders.value = orderList.map((json) => DriverOrder.fromJson(json)).toList();
       filterOrdersBySelectedDate();
     } else {
-      print('Error fetching orders');
+       
     }
     isLoading.value = false;
   }
-
-  // Filter orders by the selected date using assignedAt field
   void filterOrdersBySelectedDate() {
     filteredOrders.value = orders.where((order) {
-      if (order.assignedAt != null) {
-        final orderDate = DateFormat('yyyy-MM-dd').format(order.assignedAt); // Use assignedAt date
+      if (order.orderDetails.deliveredAt != null) {
+        final orderDate = DateFormat('yyyy-MM-dd').format(order.orderDetails.deliveredAt!); // Use deliveredAt date
         final selected = DateFormat('yyyy-MM-dd').format(selectedDate.value);
         return orderDate == selected;
       }
@@ -76,11 +74,11 @@ class WalletHistoryController extends GetxController {
   String getFormattedDate() {
     final now = DateTime.now();
     if (isSameDay(selectedDate.value, now)) {
-      return 'Today';
+      return 'Today'.tr;
     } else if (isSameDay(selectedDate.value, now.subtract(Duration(days: 1)))) {
-      return 'Yesterday';
+      return 'Yesterday'.tr;
     } else if (isSameDay(selectedDate.value, now.add(Duration(days: 1)))) {
-      return 'Tomorrow';
+      return 'Tomorrow'.tr;
     } else {
       return DateFormat('yyyy-MM-dd').format(selectedDate.value);
     }

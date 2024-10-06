@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-
 import '../../Utilities/constants.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
-  final bool isButtonEnabled;
 
   const CustomButton({
     required this.onPressed,
     required this.text,
-    required this.isButtonEnabled,
     Key? key,
   }) : super(key: key);
 
@@ -28,21 +25,19 @@ class CustomButton extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: isButtonEnabled
-                    ? [AppColors.primaryColor, Colors.indigoAccent.shade700]
-                    : [Colors.grey, Colors.grey],
+                colors: [AppColors.primaryColor, Colors.indigoAccent.shade700],
               ),
               borderRadius: const BorderRadius.all(Radius.circular(25)),
             ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 splashFactory: NoSplash.splashFactory,
-                foregroundColor: isButtonEnabled ? Colors.white : Colors.grey,
+                foregroundColor:Colors.white,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: isButtonEnabled ? onPressed : null,
+              onPressed:onPressed ,
               child: Text(
                 text,
                 style: const TextStyle(

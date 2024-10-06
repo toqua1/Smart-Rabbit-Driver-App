@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import '../../Controllers/login_controller.dart';
 import '../Create_account_pages/registration.dart';
 import '../Widgets/custom_button.dart';
 import '../Widgets/custom_divider.dart';
@@ -9,7 +8,7 @@ import '../Widgets/custom_outlined_button.dart';
 import '../Widgets/inter_text_style.dart';
 import 'login_screen.dart';
 
-class LandingPage extends GetView<LoginController> {
+class LandingPage extends StatelessWidget {
   LandingPage({Key? key});
 
   @override
@@ -66,7 +65,7 @@ class LandingPage extends GetView<LoginController> {
                         buttonText: 'landing_continue_google'.tr,
                         iconColor: Colors.red,
                         onPressed: () {
-                          print('google button clicked');
+                           
                         },
                         iconData: FontAwesomeIcons.google,
                       ),
@@ -74,7 +73,7 @@ class LandingPage extends GetView<LoginController> {
                         buttonText: 'landing_continue_facebook'.tr,
                         iconColor: Colors.blue,
                         onPressed: () {
-                          print('Facebook button clicked');
+                           
                         },
                         iconData: FontAwesomeIcons.facebook,
                       ),
@@ -82,7 +81,7 @@ class LandingPage extends GetView<LoginController> {
                         buttonText: 'landing_continue_apple'.tr,
                         iconColor: Colors.black,
                         onPressed: () {
-                          print('Facebook button clicked');
+                           
                         },
                         iconData: FontAwesomeIcons.apple,
                       ),
@@ -101,7 +100,7 @@ class LandingPage extends GetView<LoginController> {
                             );
                           },
                           text: "landing_login_now".tr,
-                          isButtonEnabled: true),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

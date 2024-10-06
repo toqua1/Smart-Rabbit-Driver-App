@@ -116,7 +116,6 @@ class ForgotPassword extends GetView<ForgotPasswordController> {
                         }
                             : null,
                         text: 'Send Email'.tr,
-                        isButtonEnabled: controller.isButtonEnabled.value,
                       );
                     }
                   }),

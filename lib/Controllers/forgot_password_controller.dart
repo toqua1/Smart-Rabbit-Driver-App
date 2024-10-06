@@ -52,7 +52,7 @@ class ForgotPasswordController extends GetxController {
         throw Exception("Invalid response format");
       }
     } catch (e) {
-      debugPrint('Forgot password failed: $e');
+      // debug
       rethrow;
     } finally {
       isLoading.value = false; // Set loading state to false

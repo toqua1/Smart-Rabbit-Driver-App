@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_rabbit_second_app/View/Home/home_nav_bar.dart';
 import '../../Utilities/constants.dart';
-import '../Home/home_page.dart';
 import '../Login_SignUp/landing _login.dart';
 import 'intro_screen.dart';
 
@@ -46,21 +46,21 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (isLoggedIn) {
       Get.off(
-        () => HomePage(),
-        transition: Transition.rightToLeftWithFade, // Add the transition here
-        duration: const Duration(milliseconds: 500), // Specify the duration
+        () => HomeNavBar(),
+        transition: Transition.rightToLeftWithFade,
+        duration: const Duration(milliseconds: 500),
       );
     } else if (introSeen) {
       Get.off(
         () => LandingPage(),
-        transition: Transition.rightToLeftWithFade, // Add the transition here
-        duration: const Duration(milliseconds: 500), // Specify the duration
+        transition: Transition.rightToLeftWithFade,
+        duration: const Duration(milliseconds: 500),
       );
     } else {
       Get.off(
         () => const IntroductionScreenExample(),
-        transition: Transition.rightToLeftWithFade, // Add the transition here
-        duration: const Duration(milliseconds: 500), // Specify the duration
+        transition: Transition.rightToLeftWithFade,
+        duration: const Duration(milliseconds: 500),
       );
     }
   }

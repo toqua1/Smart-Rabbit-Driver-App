@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:smart_rabbit_second_app/View/Login_SignUp/login_screen.dart';
 import '../../Controllers/create_account_controller.dart';
-import '../Home/HomeView.dart';
+import '../Home/home_nav_bar.dart';
 import '../Widgets/custom_button.dart';
 
 class SetupDone extends StatelessWidget {
-  final RegistrationController controller = Get.find<RegistrationController>();
+  // final RegistrationController controller = Get.find<RegistrationController>();
 
-  SetupDone({super.key});
+  const SetupDone({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -23,14 +24,14 @@ class SetupDone extends StatelessWidget {
               const Expanded(
                 child: SizedBox.shrink(),
               ),
-              Image.asset(
-                'assets/setup_done.png',
+              SvgPicture.asset(
+                'assets/done.svg',
                 height: 200,
                 width: 200,
               ),
               const SizedBox(height: 20),
               const Text(
-                'Your account has been set up!',
+                'Congratulations!',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -38,7 +39,7 @@ class SetupDone extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Text(
-                'We have customized feeds according to your preferences.',
+                'You have to wait admin approve your account.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
@@ -49,13 +50,12 @@ class SetupDone extends StatelessWidget {
               CustomButton(
                 onPressed: () {
                   Get.offAll(
-                        () => HomeContent(),
+                        () => LoginPage(),
                     transition: Transition.rightToLeftWithFade,
                     duration: const Duration(milliseconds: 500),
                   );
                 },
                 text: 'Get Started',
-                isButtonEnabled: true,
               ),
             ],
           ),

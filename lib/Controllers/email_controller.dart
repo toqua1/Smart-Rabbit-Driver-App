@@ -24,10 +24,10 @@ class EmailController extends GetxController {
   }
 
   void updateButtonState() {
-    isButtonEnabled.value = _isEmailValid(emailController.text);
+    isButtonEnabled.value = isEmailValid(emailController.text);
   }
 
-  bool _isEmailValid(String email) {
+  bool isEmailValid(String email) {
     // Regular expression for validating an email
     final RegExp emailRegex = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',

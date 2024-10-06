@@ -1,4 +1,4 @@
-package com.example.smart_rabbit_second_app
+package com.smart_rabbit.app2
 
 import io.flutter.embedding.android.FlutterActivity
 

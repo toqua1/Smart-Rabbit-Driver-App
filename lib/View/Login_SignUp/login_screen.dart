@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Controllers/login_controller.dart';
+import 'package:smart_rabbit_second_app/Controllers/create_password_controller.dart';
+import 'package:smart_rabbit_second_app/Controllers/phone_controller.dart';
+import 'package:smart_rabbit_second_app/View/Home/home_nav_bar.dart';
+import 'package:smart_rabbit_second_app/View/Home/order_list_screen.dart';
+import '../../API/Api_helper.dart';
 import '../Create_account_pages/registration.dart';
-import '../Home/home_page.dart';
 import '../Widgets/custom_button.dart';
 import '../Widgets/custom_textfiled.dart';
 import '../Widgets/inter_text_style.dart';
+import '../Widgets/loading_overlay.dart';
 import '../Widgets/phone_number_field.dart';
 import 'forgot_password.dart';
 
-class LoginPage extends GetView<LoginController> {
-  LoginPage({Key? key});
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key, });
+  final CreatePasswordController passCon=Get.put(CreatePasswordController());
+  final PhoneController phoneCon=Get.put(PhoneController());
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    RxBool isLoading=false.obs ;
 
     return GestureDetector(
       onTap: () {
@@ -61,12 +69,11 @@ class LoginPage extends GetView<LoginController> {
                     height: screenHeight * 0.06,
                   ),
                   PhoneNumberField(
-                    controller: controller.phoneController,
+                    controller: phoneCon.phoneController,
                     onChanged: (phone) {
-                      controller.handlePhoneNumberChange(phone);
-                      controller.updateButtonState();
+                      phoneCon.handlePhoneNumberChange(phone);
+                      phoneCon.updateButtonState();
                     },
-                    isCreateOrder: false,
                   ),
                   SizedBox(
                     height: screenHeight * 0.03,
@@ -74,7 +81,7 @@ class LoginPage extends GetView<LoginController> {
                   CustomTextField(
                     labelText: 'login_password'.tr,
                     hintText: 'login_password_hint'.tr,
-                    controller: controller.passwordController,
+                    controller: passCon.passwordController,
                     icon: Iconsax.lock,
                     obscureText: true,
                   ),
@@ -107,48 +114,52 @@ class LoginPage extends GetView<LoginController> {
                   SizedBox(
                     height: screenHeight * 0.0008,
                   ),
-                  Obx(() {
-                    return CustomButton(
-                      onPressed: controller.isButtonEnabled.value
-                          ? () async {
-                              try {
-                                await controller.loginUser(
-                                  //phone: controller.phoneController.text,
-                                  password: controller.passwordController.text,
-                                );
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                await prefs.setBool('isLoggedIn', true);
-                                QuickAlert.show(
-                                  context: context,
-                                  type: QuickAlertType.success,
-                                  text: 'login_success'.tr,
-                                );
-                                await Future.delayed(
-                                    const Duration(seconds: 1));
+                  CustomButton(
+                    onPressed: () async {
+                      isLoading.value = true;
+                      try {
+                        bool loginSuccess = await ApiData().loginDriver(
+                          phoneCon.phone,
+                          passCon.passwordController.text,
+                        );
 
-                                Get.offAll(() => HomePage(),
-                                    transition: Transition.fadeIn,
-                                    duration:
-                                        const Duration(milliseconds: 500));
-                              } catch (e) {
-                                print('Login failed: $e');
-                                QuickAlert.show(
-                                  context: context,
-                                  type: QuickAlertType.error,
-                                  title: 'login_error_title'.tr,
-                                  text: 'login_error_message'.tr,
-                                );
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                await prefs.setBool('isLoggedIn', false);
-                              }
-                            }
-                          : null,
-                      text: 'login_button'.tr,
-                      isButtonEnabled: controller.isButtonEnabled.value,
-                    );
-                  }),
+                        if (loginSuccess) {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          await prefs.setBool('isLoggedIn', true);
+
+                          if (Get.context != null && Get.context!.mounted) {
+                            QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.success,
+                              text: 'login_success'.tr,
+                            );
+                            await Future.delayed(const Duration(seconds: 1));
+
+                            Get.offAll(() => HomeNavBar(),
+                                transition: Transition.fadeIn,
+                                duration: const Duration(milliseconds: 500));
+                          }
+                        } else {
+                          isLoading.value = false;  // Stop loading if login fails
+                          // if (Get.context != null && Get.context!.mounted) {
+                          //   QuickAlert.show(
+                          //     context: context,
+                          //     type: QuickAlertType.error,
+                          //     title: 'login_error_title'.tr,
+                          //     text: 'login_error_message'.tr,
+                          //   );
+                          // }
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          await prefs.setBool('isLoggedIn', false);
+                        }
+                      } catch (e) {
+                        isLoading.value = false;
+                         
+                      }
+                    },
+                    text: 'login_button'.tr,
+                  ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -185,6 +196,12 @@ class LoginPage extends GetView<LoginController> {
                           )),
                     ],
                   ),
+                  // Loading overlay
+                  Obx(() {
+                    return isLoading.value
+                        ? const LoadingOverlay()
+                        : const SizedBox.shrink();
+                  }),
                 ],
               ),
             ),

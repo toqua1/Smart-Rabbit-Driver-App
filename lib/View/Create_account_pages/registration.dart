@@ -1,136 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
-import '../../Controllers/create_account_controller.dart';
-import '../../Controllers/store_information_controller.dart';
-import '../../Utilities/registration_abstraction.dart';
-import '../Login_SignUp/login_screen.dart';
-import '../Widgets/custom_button.dart';
-import '../Widgets/stepper_row.dart';
-import 'biodata_page.dart';
-import 'create_password_page.dart';
-import 'store_information.dart';
-import 'email_page.dart';
-import 'phone_page.dart';
+import 'package:smart_rabbit_second_app/Controllers/email_controller.dart';
+import 'package:smart_rabbit_second_app/Controllers/phone_controller.dart';
+import 'package:smart_rabbit_second_app/View/Create_account_pages/create_password_page.dart';
+import 'package:smart_rabbit_second_app/View/Widgets/custom_button_edit.dart';
+import 'package:smart_rabbit_second_app/View/Widgets/custom_textfeild_edit.dart';
+import 'package:smart_rabbit_second_app/View/Widgets/phone_number_field.dart';
+import '../../Utilities/app_styles.dart';
+
 
 class RegistrationScreen extends StatelessWidget {
-  RegistrationScreen({Key? key}) : super(key: key);
-
-  final PageController pageController = PageController();
-  final StepperController stepperController = Get.put(StepperController());
-  final StoreInformationController storeInfoController =
-      Get.put(StoreInformationController());
-  final RegistrationController registrationController = Get.put(
-      RegistrationController()); // Instantiate the RegistrationController
-
-  final List<StepPage> pages = [
-    BioDataPage(),
-    CreatePasswordPage(),
-    const StoreInformationPage(),
-    const PhoneNumberPage(),
-    EmailPage(),
-  ];
+  RegistrationScreen({super.key});
+  final EmailController eController = Get.put(EmailController());
+  final PhoneController controller= Get.put(PhoneController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Create Account'.tr),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          CustomStepper(
-            stepperController: stepperController,
-            pageController: pageController,
-          ),
-          Expanded(
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: pageController,
-              onPageChanged: (int index) {
-                stepperController.goToStep(index);
-              },
-              children: pages,
+        appBar: AppBar(
+          title: Text('Sign Up'.tr),
+          centerTitle: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Phone Number'.tr, style: Styles.style14GreyColor),
+                SizedBox(
+                  height: screenHeight * 0.01,
+                ),
+                PhoneNumberField(
+                  controller: controller.phoneController,
+                  onChanged: (phone) {
+                    controller.handlePhoneNumberChange(phone);
+                    controller.updateButtonState();
+                  },
+                ),
+                SizedBox(
+                  height: screenHeight * 0.03,
+                ),
+                Text('Email'.tr, style: Styles.style14GreyColor),
+                SizedBox(
+                  height: screenHeight * 0.01,
+                ),
+                customTextField(
+                  hintText: '',
+                  showBorder: false,
+                  controller: eController.emailController,
+                  maxLines: false,
+                  isReadOnly: false,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please fill the field'.tr;
+                    }
+                    return null;
+                  },
+                ),
+                const Spacer(),
+                Center(
+                  child: customButton(
+                    title: 'Save'.tr,
+                    style: Styles.style14,
+                    action: onTapNext,
+                    smallSize: true,
+                  ),
+                ),
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Obx(() {
-              final currentPageIndex = stepperController.currentStep.value;
-              final isLastPage = currentPageIndex == pages.length - 1;
-              final buttonText = isLastPage ? 'Submit'.tr : 'Next'.tr;
-
-              // Determine if the current page's fields are filled
-              bool isCurrentPageFieldsFilled;
-              if (pages[currentPageIndex] is StoreInformationPage) {
-                isCurrentPageFieldsFilled =
-                    storeInfoController.isButtonEnabled.value;
-              } else {
-                isCurrentPageFieldsFilled = (pages[currentPageIndex] as dynamic)
-                    .controller
-                    .isButtonEnabled
-                    .value;
-              }
-
-              // Show loading indicator if the request is in progress
-              if (registrationController.isLoading.value) {
-                return const CircularProgressIndicator();
-              }
-
-              return CustomButton(
-                onPressed: isCurrentPageFieldsFilled
-                    ? () async {
-                        if (isLastPage) {
-                          // Submit the registration form
-                          registrationController.isLoading.value = true;
-                          try {
-                            await registrationController.registerUser();
-                            QuickAlert.show(
-                              context: context,
-                              type: QuickAlertType.success,
-                              text: 'Account created successfully',
-                              showConfirmBtn: false,
-                              autoCloseDuration: const Duration(seconds: 1),
-                              showCancelBtn: false,
-                            );
-                            await Future.delayed(const Duration(seconds: 1));
-
-                            Get.offAll(() => LoginPage(),
-                                transition: Transition.fadeIn,
-                                duration: const Duration(milliseconds: 500));
-                          } catch (e) {
-                            QuickAlert.show(
-                              context: context,
-                              type: QuickAlertType.error,
-                              title: 'Oops...',
-                              text: 'Sorry, something went wrong',
-                              showConfirmBtn: false,
-                              autoCloseDuration: const Duration(seconds: 1),
-                              showCancelBtn: false,
-                            );
-                          } finally {
-                            registrationController.isLoading.value = false;
-                          }
-                        } else {
-                          final nextPageIndex = currentPageIndex + 1;
-                          stepperController.goToStep(nextPageIndex);
-                          pageController.animateToPage(
-                            nextPageIndex,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeInOut,
-                          );
-                        }
-                      }
-                    : null,
-                text: buttonText,
-                isButtonEnabled: isCurrentPageFieldsFilled,
-              );
-            }),
-          ),
-        ],
-      ),
+        )
     );
+  }
+
+  void onTapNext() {
+    if (_formKey.currentState!.validate() &&
+        controller.phoneController.text.isNotEmpty) {
+      if (eController.isEmailValid(eController.emailController.text)) {
+        Get.to(CreatePasswordPage());
+      } else {
+        Get.snackbar('Error'.tr, 'Fill email correctly.'.tr);
+      }
+    } else {
+      Get.snackbar('Error'.tr, 'Please fill empty fields'.tr);
+    }
   }
 }
