@@ -16,24 +16,23 @@ class ApiData {
   late String authToken;
 
   ApiData() {
-
     _loadAuthToken();
   }
 
-  Future<void> _loadAuthToken() async{
+  Future<void> _loadAuthToken() async {
     // final prefs = await SharedPreferences.getInstance();
     // authToken =prefs.getString('token') ?? '';
-    authToken=storage.read('token')?? '';
+    authToken = storage.read('token') ?? '';
   }
 
-  Future<void> saveUserData({
-    required String token,
-    required String name,
-    required String email,
-    required String phone,
-    required String id,
-    required String role
-  }) async {
+  Future<void> saveUserData(
+      {required String token,
+      required String name,
+      required String email,
+      required String phone,
+      required String id,
+      required String address,
+      required String role}) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
     prefs.setString('name', name);
@@ -41,6 +40,7 @@ class ApiData {
     prefs.setString('phone', phone);
     prefs.setString('id', id);
     prefs.setString('role', role);
+    prefs.setString('address', address);
   }
 
   // Load data from SharedPreferences
@@ -52,8 +52,59 @@ class ApiData {
       'email': prefs.getString('email'),
       'phone': prefs.getString('phone'),
       'id': prefs.getString('id'),
-      'role':prefs.getString('role')
+      'role': prefs.getString('role'),
+      'address': prefs.getString('address')
     };
+  }
+
+  Future updateProfile(String name, String address, String phone) async {
+    try {
+      final formData = FormData.fromMap({
+        'name': name,
+        'phone': phone,
+        'address': address,
+      });
+      var data = await getUserData();
+      String? id = data['id'];
+      final response = await dio.post(
+        '${ApiEndpoints.baseUrl}${ApiEndpoints.changeDriverStatusEndpoint}$id',
+        data: formData,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final driverData = response.data['data']['driver'];
+        // final token = response.data['token'];
+        print('#####');
+        print(driverData['name']);
+        print(driverData['phone']);
+        print(driverData['address']);
+        await saveUserData(
+          token: '',
+          name: driverData['name'],
+          email: driverData['email'],
+          phone: driverData['phone'],
+          id: driverData['_id'],
+          role: driverData['role'],
+          address: driverData['address'],
+        );
+
+        // final name = response.data['data']['driver']['name'];
+        // final email = response.data['data']['driver']['email'];
+        // final phone = response.data['data']['driver']['phone'];
+        // final id = response.data['data']['driver']['_id'];
+        // saveUserData(token: token, name: name, email: email, phone: phone, id: id);
+      }
+    } catch (e) {
+      print('--->$e');
+      if (e is DioException) {
+      } else if (e is TypeError) {
+      } else {}
+    }
   }
 
   Future<void> signUpDriver(SignUp signUpData) async {
@@ -77,14 +128,12 @@ class ApiData {
         'role': signUpData.role,
       });
 
-       
-
       final response = await dio.post(
         '${ApiEndpoints.baseUrl}${ApiEndpoints.registerEndpoint}',
         data: formData,
         options: Options(
           headers: {
-            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer $authToken',
           },
         ),
       );
@@ -92,6 +141,10 @@ class ApiData {
       if (response.statusCode == 200) {
         final driverData = response.data['data']['driver'];
         // final token = response.data['token'];
+        print('#####');
+        print(driverData['name']);
+        print(driverData['phone']);
+        print(driverData['address']);
         await saveUserData(
           token: '',
           name: driverData['name'],
@@ -99,6 +152,7 @@ class ApiData {
           phone: driverData['phone'],
           id: driverData['_id'],
           role: driverData['role'],
+          address: driverData['address'],
         );
 
         // final name = response.data['data']['driver']['name'];
@@ -106,18 +160,11 @@ class ApiData {
         // final phone = response.data['data']['driver']['phone'];
         // final id = response.data['data']['driver']['_id'];
         // saveUserData(token: token, name: name, email: email, phone: phone, id: id);
-      } else {
-         
-         
-      }
+      } else {}
     } catch (e) {
       if (e is DioException) {
-         
       } else if (e is TypeError) {
-         
-      } else {
-         
-      }
+      } else {}
     }
   }
 
@@ -140,7 +187,10 @@ class ApiData {
         final driverData = response.data['data']['driver'];
         final driver = Driver.fromJson(driverData);
         saveToken(driver.token);
-
+        print('#####');
+        print(driverData['name']);
+        print(driverData['phone']);
+        print(driverData['address']);
         await saveUserData(
           token: driver.token,
           name: driver.name,
@@ -148,34 +198,32 @@ class ApiData {
           phone: driver.phone,
           id: driver.id,
           role: driver.role,
+          address: driver.address,
         );
-         
+
         // final token = response.data['data']['driver']['token'];
         // final name = response.data['data']['driver']['name'];
         // final email = response.data['data']['driver']['email'];
         // final phone = response.data['data']['driver']['phone'];
         // final id = response.data['data']['driver']['_id'];
-        //  
-        //  
-        //  
-        //  
-        //  
+        //
+        //
+        //
+        //
+        //
 
         // saveUserData(token: token, name: name, email: email, phone: phone, id: id);
         return true;
       } else {
         Get.snackbar('Error', 'Login failed: ${response.data['message']}');
-         
+
         return false; // Login failed
       }
     } catch (e) {
       if (e is DioException) {
         Get.snackbar('Error', ' ${e.response?.data['message'] ?? e.message}',
             colorText: Color(0xffFF0000));
-         
-
       } else {
-         
         Get.snackbar('Error', 'An unexpected error occurred: $e');
       }
       return false; // Error occurred
@@ -197,11 +245,9 @@ class ApiData {
       if (response.statusCode == 200) {
         return response.data['data']['wallet'];
       } else {
-         
         return null;
       }
     } on DioException catch (e) {
-       
       return null;
     }
   }
@@ -220,15 +266,34 @@ class ApiData {
       if (response.statusCode == 200) {
         return response;
       } else {
-         
         return null;
       }
     } on DioException catch (e) {
       if (e.response != null) {
-         
+      } else {}
+      return null;
+    }
+  }
+
+  Future<Response?> getDriverHistoryOrders() async {
+    try {
+      final response = await dio.get(
+        '${ApiEndpoints.baseUrl}${ApiEndpoints.getDriverCompletedOrders}',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $authToken',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return response;
       } else {
-         
+        return null;
       }
+    } on DioException catch (e) {
+      if (e.response != null) {
+      } else {}
       return null;
     }
   }
@@ -247,21 +312,18 @@ class ApiData {
       if (response.statusCode == 200) {
         return response;
       } else {
-         
         return null;
       }
     } on DioException catch (e) {
       if (e.response != null) {
-         
-      } else {
-         
-      }
+      } else {}
       return null;
     }
   }
 
   // New method to update order status
-  Future<Response?> updateOrderStatus(String orderId, Map<String , dynamic>requestBody) async {
+  Future<Response?> updateOrderStatus(
+      String orderId, Map<String, dynamic> requestBody) async {
     try {
       final response = await dio.patch(
         '${ApiEndpoints.baseUrl}${ApiEndpoints.updateOrderStatus}$orderId',
@@ -275,20 +337,12 @@ class ApiData {
       );
 
       if (response.statusCode == 200) {
-         
         return response;
-      } else {
-         
-      }
+      } else {}
     } on DioException catch (e) {
       if (e.response != null) {
-         
-      } else {
-         
-      }
-    } catch (e) {
-       
-    }
+      } else {}
+    } catch (e) {}
     return null;
   }
 
@@ -306,7 +360,6 @@ class ApiData {
   String? getToken() {
     return storage.read('token');
   }
-
 
 // Future<void> saveUserData({
   //   required String token,
@@ -381,10 +434,10 @@ class ApiData {
   //       saveEmail(userProfile.customer.email);
   //       savePhone(userProfile.customer.phone);
   //     } else {
-  //        
+  //
   //     }
   //   } catch (e) {
-  //      
+  //
   //   }
   // }
   //

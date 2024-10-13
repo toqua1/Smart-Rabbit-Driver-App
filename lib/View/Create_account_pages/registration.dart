@@ -8,19 +8,31 @@ import 'package:smart_rabbit_second_app/View/Widgets/custom_textfeild_edit.dart'
 import 'package:smart_rabbit_second_app/View/Widgets/phone_number_field.dart';
 import '../../Utilities/app_styles.dart';
 
-
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({super.key});
+
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
   final EmailController eController = Get.put(EmailController());
-  final PhoneController controller= Get.put(PhoneController());
+
+  final PhoneController controller = Get.put(PhoneController());
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.phoneController.text = '';
+    eController.emailController.text = '';
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
           title: Text('Sign Up'.tr),
@@ -76,8 +88,7 @@ class RegistrationScreen extends StatelessWidget {
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 
   void onTapNext() {

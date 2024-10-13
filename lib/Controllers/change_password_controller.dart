@@ -36,7 +36,8 @@ class ChangePasswordController extends GetxController {
   }) async {
     isLoading.value = true;
     try {
-      final resetToken = storage.read('resetToken') ?? ''; // Fetch the resetToken from Get Storage
+      final resetToken = storage.read('resetToken') ??
+          ''; // Fetch the resetToken from Get Storage
 
       final response = await Dio().patch(
         '${ApiEndpoints.baseUrl}${ApiEndpoints.updatePasswordEndpoint}',
@@ -59,12 +60,14 @@ class ChangePasswordController extends GetxController {
         throw Exception("Invalid response format");
       }
     } catch (e) {
+      print('--->$e');
       // debug
       rethrow;
     } finally {
       isLoading.value = false; // Set loading state to false
     }
   }
+
   @override
   void onClose() {
     password.dispose();

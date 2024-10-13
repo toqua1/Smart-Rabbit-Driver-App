@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class customButton extends StatelessWidget {
-  const customButton({
-    super.key, required this.title, required this.style, required this.action, this.smallSize,
-  });
-  final String title ;
-  final TextStyle style ;
+  const customButton(
+      {super.key,
+      this.title,
+      required this.style,
+      required this.action,
+      this.smallSize,
+      this.child});
+  final String? title;
+  final Widget? child;
+  final TextStyle style;
   final Function? action;
   final bool? smallSize;
 
@@ -24,13 +29,18 @@ class customButton extends StatelessWidget {
           }
         },
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          backgroundColor:title=='Cancelled'.tr?Colors.white :Theme.of(context)
-              .primaryColor,
-          minimumSize:Size(smallSize != null ? 225 : double.infinity, 50), //
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: action == null
+              ? Colors.grey[300]
+              : title == 'Cancelled'.tr
+                  ? Colors.white
+                  : Theme.of(context).primaryColor,
+          minimumSize: Size(smallSize != null ? 225 : double.infinity, 50), //
           // Full-width button
         ),
-        child:Text(title,style: style),
+        child:
+            title == null ? (child ?? Container()) : Text(title!, style: style),
       ),
     );
   }

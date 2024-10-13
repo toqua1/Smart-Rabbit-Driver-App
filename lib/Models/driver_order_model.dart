@@ -1,4 +1,3 @@
-
 class DriverOrder {
   final String id;
   final String driverId;
@@ -8,12 +7,11 @@ class DriverOrder {
   final DateTime assignedAt;
   final OrderDetails orderDetails;
 
-
   DriverOrder({
     required this.id,
     required this.driverId,
     required this.status,
-     // this.notes,
+    // this.notes,
     required this.assignedAt,
     required this.orderDetails,
     required this.shippedType,
@@ -24,15 +22,19 @@ class DriverOrder {
       id: json['_id'],
       driverId: json['driver'],
       status: json['status'],
-      shippedType:json['shippedType'],
-      assignedAt: json['assignedAt'] != null ? DateTime.parse(json['assignedAt']) : DateTime.now(),
+      shippedType: json['shippedType'],
+      assignedAt: json['assignedAt'] != null
+          ? DateTime.parse(json['assignedAt'])
+          : DateTime.now(),
       orderDetails: OrderDetails.fromJson(json['order']),
       // notes: json['notes'] ?? '',
     );
   }
 }
+
 class OrderDetails {
   final String id;
+  final String orderNumber;
   final String customerId;
   final String pickupAddress;
   final DateTime pickupDate;
@@ -60,8 +62,9 @@ class OrderDetails {
   final DateTime? recieveFromWareHouseDate;
   final DateTime? driverTransferredDate;
 
-  OrderDetails( {
+  OrderDetails({
     required this.id,
+    required this.orderNumber,
     required this.customerId,
     required this.pickupAddress,
     required this.pickupDate,
@@ -93,6 +96,7 @@ class OrderDetails {
   factory OrderDetails.fromJson(Map<String, dynamic> json) {
     return OrderDetails(
       id: json['_id'],
+      orderNumber: json['orderNumber'].toString(),
       customerId: json['customerId'],
       pickupAddress: json['pickupAddress'],
       pickupDate: DateTime.parse(json['pickupDate']),
@@ -114,13 +118,21 @@ class OrderDetails {
       orderWeight: json['orderWeight'],
       notes: json['notes'],
       total: json['total'].toDouble(),
-      deliveredAt: json['deliveredAt'] != null ? DateTime.parse(json['deliveredAt']): null,
-      wareHouseDate: json['wareHouseDate'] != null ?DateTime.parse(json['wareHouseDate']): null,
-      driverRecievedDate: json['driverRecievedDate'] != null ?DateTime.parse(json['driverRecievedDate'])
+      deliveredAt: json['deliveredAt'] != null
+          ? DateTime.parse(json['deliveredAt'])
           : null,
-      recieveFromWareHouseDate: json['recieveFromWareHouseDate'] != null ?DateTime.parse(json['recieveFromWareHouseDate'])
+      wareHouseDate: json['wareHouseDate'] != null
+          ? DateTime.parse(json['wareHouseDate'])
           : null,
-      driverTransferredDate: json['driverTransferredDate'] != null ?DateTime.parse(json['driverTransferredDate']) : null,
+      driverRecievedDate: json['driverRecievedDate'] != null
+          ? DateTime.parse(json['driverRecievedDate'])
+          : null,
+      recieveFromWareHouseDate: json['recieveFromWareHouseDate'] != null
+          ? DateTime.parse(json['recieveFromWareHouseDate'])
+          : null,
+      driverTransferredDate: json['driverTransferredDate'] != null
+          ? DateTime.parse(json['driverTransferredDate'])
+          : null,
     );
   }
 }

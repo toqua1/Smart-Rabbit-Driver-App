@@ -4,14 +4,13 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:smart_rabbit_second_app/Utilities/responsive_function.dart';
 
 abstract class Styles {
-
   static TextStyle styleBold20Nunito(BuildContext context) {
-  return TextStyle(
-  fontSize: responsiveSize(context, 5.sw, 4.5.sw),
-  fontWeight: FontWeight.w700,
-  fontFamily: GoogleFonts.nunito().fontFamily
-  );
-}
+    return TextStyle(
+        fontSize: responsiveSize(context, 5.sw, 4.5.sw),
+        fontWeight: FontWeight.w700,
+        fontFamily: GoogleFonts.nunito().fontFamily);
+  }
+
   static TextStyle style10RedColor = TextStyle(
     color: Colors.red,
     fontSize: 10,
@@ -29,6 +28,12 @@ abstract class Styles {
   static const TextStyle styleBold16Primary = TextStyle(
     color: Color(0xff0A3B9A),
     fontSize: 10,
+    fontFamily: 'Roboto-Bold',
+    fontWeight: FontWeight.w700,
+  );
+  static const TextStyle styleBold24Primary = TextStyle(
+    color: Color(0xff0A3B9A),
+    fontSize: 24,
     fontFamily: 'Roboto-Bold',
     fontWeight: FontWeight.w700,
   );
@@ -63,49 +68,55 @@ abstract class Styles {
     fontWeight: FontWeight.w700,
   );
 
-  static const TextStyle style12GreyColor= TextStyle(
+  static const TextStyle style12GreyColor = TextStyle(
     color: Color(0xffC5C5C5),
     fontSize: 12,
     fontFamily: 'Roboto-Bold',
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle style10GreyColor= TextStyle(
+  static const TextStyle style10GreyColor = TextStyle(
     color: Color(0xff999999),
     fontSize: 10,
     fontFamily: 'Roboto-Regular',
     fontWeight: FontWeight.w300,
   );
 
-  static const TextStyle style14GreyColor= TextStyle(
+  static const TextStyle style14BlackBold = TextStyle(
+    color: Colors.black,
+    fontSize: 14,
+    fontFamily: 'Roboto-Regular',
+    fontWeight: FontWeight.w700,
+  );
+  static const TextStyle style14GreyColor = TextStyle(
     color: Color(0xff999999),
     fontSize: 14,
     fontFamily: 'Roboto-Regular',
     fontWeight: FontWeight.w300,
   );
 
-  static const TextStyle style14GreyBold= TextStyle(
+  static const TextStyle style14GreyBold = TextStyle(
     color: Color(0xff999999),
     fontSize: 14,
     fontFamily: 'Roboto-Regular',
     fontWeight: FontWeight.w600,
   );
 
-  static const TextStyle style10BlackColor= TextStyle(
+  static const TextStyle style10BlackColor = TextStyle(
     color: Color(0xff22292E),
     fontSize: 10,
     fontFamily: 'Roboto-Regular',
     fontWeight: FontWeight.w300,
   );
 
-  static const TextStyle style12BlackColor= TextStyle(
+  static const TextStyle style12BlackColor = TextStyle(
     color: Color(0xff22292E),
     fontSize: 12,
     fontFamily: 'Roboto-Regular',
     fontWeight: FontWeight.w400,
   );
 
-  static const TextStyle style14= TextStyle(
+  static const TextStyle style14 = TextStyle(
     color: Colors.white,
     fontSize: 14,
     fontFamily: 'Roboto-Regular',
@@ -170,10 +181,10 @@ abstract class Styles {
   );
 
   static TextStyle style12Black = const TextStyle(
-      color: Colors.black,
-      fontSize: 12,
-      fontFamily: 'Roboto-Regular',
-      fontWeight: FontWeight.w400,
+    color: Colors.black,
+    fontSize: 12,
+    fontFamily: 'Roboto-Regular',
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle styleBold10Green = const TextStyle(
@@ -196,21 +207,21 @@ abstract class Styles {
     fontWeight: FontWeight.w900,
   );
 
-  static const TextStyle style12Bold= TextStyle(
+  static const TextStyle style12Bold = TextStyle(
     color: Colors.black,
     fontSize: 12,
     fontFamily: 'Roboto-Bold',
     fontWeight: FontWeight.w600,
   );
 
-  static const TextStyle style20BoldBlack= TextStyle(
+  static const TextStyle style20BoldBlack = TextStyle(
     color: Colors.black,
     fontSize: 20,
     fontFamily: 'Roboto-Bold',
     fontWeight: FontWeight.w700,
   );
 
-  static const TextStyle style18BoldBlack= TextStyle(
+  static const TextStyle style18BoldBlack = TextStyle(
     color: Colors.black,
     fontSize: 18,
     fontFamily: 'Roboto-Bold',
@@ -230,5 +241,4 @@ abstract class Styles {
     fontFamily: 'Roboto-Bold',
     fontWeight: FontWeight.w600,
   );
-
 }

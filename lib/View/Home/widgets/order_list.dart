@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:smart_rabbit_second_app/View/History_orders/widgets/oder_history_item.dart';
 import '../../../Controllers/driver_order_controller.dart';
 import '../../../Models/driver_order_model.dart';
 import 'order_item.dart';
@@ -6,10 +8,15 @@ import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class OrderList extends StatelessWidget {
+  final bool history;
   final double cardHeight;
   final List<DriverOrder> orders;
 
-  const OrderList({super.key, required this.orders, required this.cardHeight});
+  const OrderList(
+      {this.history = false,
+      super.key,
+      required this.orders,
+      required this.cardHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,9 @@ class OrderList extends StatelessWidget {
       } else if (orders.isEmpty) {
         return RefreshIndicator(
           onRefresh: () async {
-            await controller.fetchDriverOrders();
+            history
+                ? await controller.fetchDriverOrders()
+                : controller.fetchDriverHistoryOrders();
           },
           child: ListView(
             children: [
@@ -56,12 +65,19 @@ class OrderList extends StatelessWidget {
           itemCount: orders.length,
           itemBuilder: (context, index) {
             final order = orders[index];
-            return OrderItem(
-              order: order,
-              cardHeight: cardHeight,
-              count: index + 1,
-              isWallet: false,
-            );
+            return history
+                ? OrderHistoryItem(
+                    order: order,
+                    cardHeight: cardHeight,
+                    count: index + 1,
+                    isWallet: false,
+                  )
+                : OrderItem(
+                    order: order,
+                    cardHeight: cardHeight,
+                    count: index + 1,
+                    isWallet: false,
+                  );
           },
         );
       }

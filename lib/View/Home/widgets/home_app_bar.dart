@@ -5,12 +5,13 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_rabbit_second_app/API/Api_helper.dart';
 import 'package:smart_rabbit_second_app/Utilities/greeting_method.dart';
+import 'package:smart_rabbit_second_app/Utilities/open_scanner.dart';
 import 'package:smart_rabbit_second_app/View/Home/home_nav_bar.dart';
 import '../../../Controllers/store_information_controller.dart';
 import '../../../Utilities/app_styles.dart';
 import '../../../Utilities/constants.dart';
 
-class HomeAppBar extends StatefulWidget implements PreferredSizeWidget{
+class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   const HomeAppBar({
     super.key,
   });
@@ -24,7 +25,6 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget{
 }
 
 class _HomeAppBarState extends State<HomeAppBar> {
-
   String fullName = '';
   String email = '';
 
@@ -44,44 +44,44 @@ class _HomeAppBarState extends State<HomeAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final con =Get.put(StoreInformationController());
+    final con = Get.put(StoreInformationController());
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 4.sw),
       child: AppBar(
-        toolbarHeight:8.sh,
+        toolbarHeight: 8.sh,
         backgroundColor: Colors.transparent,
-        leading: Obx(()=>
-          CircleAvatar(
-            radius: 12.sw,
-            backgroundImage: con.profilePhoto.value != null
-                ? FileImage(con.profilePhoto.value!)
-                : null,
-            child: con.profilePhoto.value == null
-                ? Icon(Icons.person, size: 4.sw)
-                : null,
-          ),
-        ),
+        leading: Container(),
+        // leading: Obx(()=>
+        //   CircleAvatar(
+        //     radius: 12.sw,
+        //     backgroundImage: con.profilePhoto.value != null
+        //         ? FileImage(con.profilePhoto.value!)
+        //         : null,
+        //     child: con.profilePhoto.value == null
+        //         ? Icon(Icons.person, size: 4.sw)
+        //         : null,
+        //   ),
+        // ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(getGreetingMessage(), style: Styles.style12GreyColor.copyWith
-              (fontSize: 1.5.sh)),
+            Text(getGreetingMessage(),
+                style: Styles.style12GreyColor.copyWith(fontSize: 1.5.sh)),
             SizedBox(height: 1.sh),
-            Text(fullName, style: Styles.style20BoldBlack
-                .copyWith(fontSize: 2.5.sh)),
+            Text(fullName,
+                style: Styles.style20BoldBlack.copyWith(fontSize: 2.5.sh)),
           ],
         ),
         actions: [
           InkWell(
             onTap: () {
-              HomeNavBar().isDrawerOpen.value=true;
+              HomeNavBar().isDrawerOpen.value = true;
               Scaffold.of(context).openDrawer();
             },
-            child: SvgPicture.asset('assets/menu.svg',width: 3.5.sh),
+            child: SvgPicture.asset('assets/menu.svg', width: 3.5.sh),
           )
         ],
       ),
     );
   }
-
 }

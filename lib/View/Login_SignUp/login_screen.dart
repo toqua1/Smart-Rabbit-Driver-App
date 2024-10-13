@@ -18,16 +18,38 @@ import '../Widgets/loading_overlay.dart';
 import '../Widgets/phone_number_field.dart';
 import 'forgot_password.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key, });
-  final CreatePasswordController passCon=Get.put(CreatePasswordController());
-  final PhoneController phoneCon=Get.put(PhoneController());
+class LoginPage extends StatefulWidget {
+  LoginPage({
+    super.key,
+  });
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final CreatePasswordController passCon = Get.put(CreatePasswordController());
+
+  final PhoneController phoneCon = Get.put(PhoneController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    phoneCon.phoneController.text = '';
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    passCon.passwordController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    RxBool isLoading=false.obs ;
+    RxBool isLoading = false.obs;
 
     return GestureDetector(
       onTap: () {
@@ -124,7 +146,8 @@ class LoginPage extends StatelessWidget {
                         );
 
                         if (loginSuccess) {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           await prefs.setBool('isLoggedIn', true);
 
                           if (Get.context != null && Get.context!.mounted) {
@@ -140,7 +163,8 @@ class LoginPage extends StatelessWidget {
                                 duration: const Duration(milliseconds: 500));
                           }
                         } else {
-                          isLoading.value = false;  // Stop loading if login fails
+                          isLoading.value =
+                              false; // Stop loading if login fails
                           // if (Get.context != null && Get.context!.mounted) {
                           //   QuickAlert.show(
                           //     context: context,
@@ -149,12 +173,12 @@ class LoginPage extends StatelessWidget {
                           //     text: 'login_error_message'.tr,
                           //   );
                           // }
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           await prefs.setBool('isLoggedIn', false);
                         }
                       } catch (e) {
                         isLoading.value = false;
-                         
                       }
                     },
                     text: 'login_button'.tr,

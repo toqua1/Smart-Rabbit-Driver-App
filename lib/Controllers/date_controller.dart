@@ -4,20 +4,21 @@ import 'package:intl/intl.dart';
 
 class DateTimePickerController extends GetxController {
   var datePicker = TextEditingController();
+  DateTime? selectedDate;
 
-  Future<void> selectDate(BuildContext context,TextEditingController
-  controller) async {
+  Future<void> selectDate(
+      BuildContext context, TextEditingController controller) async {
     final DateTime? dateTime = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime(1950),
-      lastDate: DateTime(2100),
+      lastDate: DateTime.now(),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(
               primary: Theme.of(context).primaryColor,
-              onPrimary:  Colors.white,
+              onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: Theme.of(context).primaryColor,
             ),
@@ -28,6 +29,7 @@ class DateTimePickerController extends GetxController {
       },
     );
     if (dateTime != null) {
+      selectedDate = dateTime;
       controller.text = DateFormat('yyyy-MM-dd').format(dateTime);
     }
   }

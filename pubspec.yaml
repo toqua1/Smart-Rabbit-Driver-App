@@ -1,18 +1,16 @@
 name: smart_rabbit_second_app
 description: "A new Flutter project."
 
-publish_to: 'none'
+publish_to: "none"
 
-version: 1.0.0+1
+version: 1.0.0+3
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
-
+  sdk: ">=3.4.4 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
 
   image_picker: ^1.1.2
   cupertino_icons: ^1.0.8
@@ -47,22 +45,21 @@ dependencies:
   geocoding: ^3.0.0
 
 dev_dependencies:
-#  flutter_launcher_icons: ^0.14.1
+  #  flutter_launcher_icons: ^0.14.1
 
   flutter_test:
     sdk: flutter
 
-#flutter_launcher_icons:
-#  android: "launcher_icon"
-#  ios: true
-#  remove_alpha_ios: true
-#  image_path: "assets/icons/play_store_512Second.png"
-#  min_sdk_android: 21 # android min sdk min:16, default 21
+  #flutter_launcher_icons:
+  #  android: "launcher_icon"
+  #  ios: true
+  #  remove_alpha_ios: true
+  #  image_path: "assets/icons/play_store_512Second.png"
+  #  min_sdk_android: 21 # android min sdk min:16, default 21
 
   flutter_lints: ^3.0.0
 
 flutter:
-
   uses-material-design: true
 
   assets:
@@ -72,7 +69,6 @@ flutter:
     - assets/json_files/regions_lite.json
     - lib/View/scanner/
     - assets/icons/
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
