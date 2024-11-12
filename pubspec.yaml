@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: "none"
 
-version: 1.0.0+3
+version: 1.0.2+7
 
 environment:
   sdk: ">=3.4.4 <4.0.0"
@@ -43,6 +43,7 @@ dependencies:
   permission_handler: ^11.3.1
   google_maps_flutter: ^2.9.0
   geocoding: ^3.0.0
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   #  flutter_launcher_icons: ^0.14.1
@@ -50,13 +51,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  #flutter_launcher_icons:
-  #  android: "launcher_icon"
-  #  ios: true
-  #  remove_alpha_ios: true
-  #  image_path: "assets/icons/play_store_512Second.png"
-  #  min_sdk_android: 21 # android min sdk min:16, default 21
-
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 16 # android min sdk min:16, default 21
+  image_path_android: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
   flutter_lints: ^3.0.0
 
 flutter:

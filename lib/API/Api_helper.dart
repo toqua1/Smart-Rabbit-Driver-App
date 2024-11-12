@@ -59,23 +59,22 @@ class ApiData {
 
   Future updateProfile(String name, String address, String phone) async {
     try {
-      final formData = FormData.fromMap({
-        'name': name,
-        'phone': phone,
-        'address': address,
-      });
       var data = await getUserData();
       String? id = data['id'];
-      final response = await dio.post(
+      final response = await dio.patch(
         '${ApiEndpoints.baseUrl}${ApiEndpoints.changeDriverStatusEndpoint}$id',
-        data: formData,
+        data: {
+          'name': name,
+          'phone': phone,
+          'address': address,
+        },
         options: Options(
           headers: {
-            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer $authToken',
           },
         ),
       );
-
+      print(id);
       if (response.statusCode == 200) {
         final driverData = response.data['data']['driver'];
         // final token = response.data['token'];

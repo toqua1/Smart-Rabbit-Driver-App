@@ -31,20 +31,22 @@ class _HomeAppBarState extends State<HomeAppBar> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
   }
 
   Future<void> _loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var data = await ApiData().getUserData();
+
     setState(() {
-      fullName = prefs.getString('name') ?? 'Guest';
-      email = prefs.getString('email') ?? 'No email found';
+      fullName = data['name'] ?? 'Guest';
+      email = data['email'] ?? 'No email found';
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final con = Get.put(StoreInformationController());
+    _loadUserData();
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 4.sw),
       child: AppBar(
@@ -63,7 +65,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
         //   ),
         // ),
         title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(getGreetingMessage(),
                 style: Styles.style12GreyColor.copyWith(fontSize: 1.5.sh)),

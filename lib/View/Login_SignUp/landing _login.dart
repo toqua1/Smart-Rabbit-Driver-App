@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../Create_account_pages/registration.dart';
 import '../Widgets/custom_button.dart';
-import '../Widgets/custom_divider.dart';
-import '../Widgets/custom_outlined_button.dart';
 import '../Widgets/inter_text_style.dart';
 import 'login_screen.dart';
 
@@ -14,7 +11,6 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: () {
@@ -56,50 +52,26 @@ class LandingPage extends StatelessWidget {
                     letterSpacing: 0.16,
                   ),
                   SizedBox(
-                    height: screenHeight * 0.01,
+                    height: screenHeight * 0.05,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      CustomOutlinedButton(
-                        buttonText: 'landing_continue_google'.tr,
-                        iconColor: Colors.red,
-                        onPressed: () {
-                           
-                        },
-                        iconData: FontAwesomeIcons.google,
-                      ),
-                      CustomOutlinedButton(
-                        buttonText: 'landing_continue_facebook'.tr,
-                        iconColor: Colors.blue,
-                        onPressed: () {
-                           
-                        },
-                        iconData: FontAwesomeIcons.facebook,
-                      ),
-                      CustomOutlinedButton(
-                        buttonText: 'landing_continue_apple'.tr,
-                        iconColor: Colors.black,
-                        onPressed: () {
-                           
-                        },
-                        iconData: FontAwesomeIcons.apple,
-                      ),
                       SizedBox(
                         height: screenHeight * 0.01,
                       ),
-                      CustomDivider(text: 'landing_or_login'.tr),
+                      //     CustomDivider(text: 'landing_or_login'.tr),
                       CustomButton(
-                          onPressed: () {
-                            Get.to(
-                                  () => LoginPage(),
-                              transition: Transition.rightToLeftWithFade,
-                              // Add your transition
-                              duration: const Duration(
-                                  milliseconds: 500), // Specify duration
-                            );
-                          },
-                          text: "landing_login_now".tr,
+                        onPressed: () {
+                          Get.to(
+                            () => LoginPage(),
+                            transition: Transition.rightToLeftWithFade,
+                            // Add your transition
+                            duration: const Duration(
+                                milliseconds: 500), // Specify duration
+                          );
+                        },
+                        text: "landing_login_now".tr,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

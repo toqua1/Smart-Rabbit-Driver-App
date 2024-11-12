@@ -27,13 +27,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   final List<Map<String, String>> drawerItems = [
     {'img': 'assets/Account.svg', 'label': 'Account'.tr},
-    {'img': 'assets/Notification.svg', 'label': 'Notification'.tr},
+    // {'img': 'assets/Notification.svg', 'label': 'Notification'.tr},
     {'img': 'assets/order history.svg', 'label': 'Order History'.tr},
-    {'img': 'assets/Reward.svg', 'label': 'Incentives'.tr},
-    {'img': 'assets/Performance.svg', 'label': 'Performance'.tr},
-    {'img': 'assets/Protection.svg', 'label': 'Safety'.tr},
-    {'img': 'assets/Comments.svg', 'label': 'Comments'.tr},
-    {'img': 'assets/Policy.svg', 'label': 'Privacy Policy'.tr},
+    // {'img': 'assets/Reward.svg', 'label': 'Incentives'.tr},
+    // {'img': 'assets/Performance.svg', 'label': 'Performance'.tr},
+    // {'img': 'assets/Protection.svg', 'label': 'Safety'.tr},
+    // {'img': 'assets/Comments.svg', 'label': 'Comments'.tr},
+    // {'img': 'assets/Policy.svg', 'label': 'Privacy Policy'.tr},
     {'img': 'assets/Settings.svg', 'label': 'Settings'.tr},
     // {'img': 'assets/Settings.svg', 'label': 'Logout'.tr},
   ];
@@ -162,11 +162,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 Get.to(() => ProfileScreen());
                 break;
 
-              case 2: // Change Language
+              case 1: // Change Language
                 Get.back();
                 Get.to(() => OrderHistoryScreen());
                 break;
-              case 8: // Logout
+              case 2: // Logout
                 Get.back();
 
                 Get.to(SettingsScreen());

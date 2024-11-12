@@ -64,15 +64,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             leading: const Icon(
               Icons.logout,
-              color: Colors.red,
+              //  color: Colors.red,
             ),
-            title: Text(
-              'Logout'.tr,
-              style: Styles.style14BlackBold.copyWith(color: Colors.red),
-            ),
+            title: Text('Logout'.tr, style: Styles.style14BlackBold),
             trailing: const Icon(
               Icons.arrow_forward_ios,
               size: 16,
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              api.logout();
+            },
+            leading: const Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+            title: Text(
+              'Delete account'.tr,
+              style: Styles.style14BlackBold.copyWith(color: Colors.red),
             ),
           )
         ],

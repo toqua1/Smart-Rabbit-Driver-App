@@ -5,9 +5,10 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo library to allow you to upload your personal photo for the profile.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to allow you to capture photos.</string>
+	<string>This app requires access to the camera to scan QR codes.</string>
+
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to provide better services when the app is in use.</string>
+	<string>We need your location to provide better services for sharing the driver location.</string>
 
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>

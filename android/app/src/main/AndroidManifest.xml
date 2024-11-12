@@ -8,7 +8,7 @@
     <application
         android:label="Smart Rabbit Drivers"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher2"
+        android:icon="@mipmap/launcher_icon"
         android:enableOnBackInvokedCallback="true">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCW3edlShhZYcwsS8vzrIW_Q_S3MCx8H4U"/>

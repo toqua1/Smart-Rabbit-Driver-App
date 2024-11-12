@@ -127,6 +127,8 @@ class LocalizationService extends Translations {
           'Privacy Policy': 'Privacy Policy',
           'Settings': 'Settings',
           'Logout': 'Logout',
+          'Delete account': 'Delete account',
+
           // order summary
           'Successfully sent': 'Successfully sent',
           'Successfully received': 'Successfully received',
@@ -411,6 +413,8 @@ class LocalizationService extends Translations {
           'Privacy Policy': 'سياسة الخصوصية',
           'Settings': 'الإعدادات',
           'Logout': 'تسجيل خروج',
+          'Delete account': 'حذف الحساب',
+
           // order summary
           'Successfully sent': 'تم الإرسال بنجاح',
           'Successfully received': 'تم الاستلام بنجاح',
