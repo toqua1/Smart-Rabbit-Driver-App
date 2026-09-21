@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/IMG-20240919-WA0022.jpg" alt="Smart Rabbit Driver cover" width="1200" />
+</p>
+
 # 🐇 Smart Rabbit Driver
 
 Smart Rabbit Driver is a Flutter-based mobile application designed for delivery drivers to manage their assigned deliveries and interact with the delivery workflow through a simple and efficient interface.
@@ -123,3 +127,4 @@ The application follows the **MVC (Model–View–Controller)** architecture.
                 │      Model      │
                 │   Data / API    │
                 └─────────────────┘
+```
