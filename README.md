@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/IMG-20240919-WA0022.jpg" alt="Smart Rabbit Driver cover" width="1200" />
+  <img src="assets/driver_cover.jpg" alt="Smart Rabbit Driver cover" width="1200" />
 </p>
 
 # 🐇 Smart Rabbit Driver
